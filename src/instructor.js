@@ -1,3 +1,5 @@
+const Activity = require("./activity")
+
 class Instructor {
   #basicSalary
   ledActivities = []
@@ -7,7 +9,15 @@ class Instructor {
   }
 
   get salary () {
-    return this.#basicSalary
+    return this.#basicSalary + this.ledActivities.reduce((t, a) => t + 100 + 5 * a.assistance, 0)
+  }
+
+  lead (activity) {
+    if (activity instanceof Activity) {
+      // eslint-disable-next-line no-param-reassign
+      activity.instructor = this
+      this.ledActivities.push(activity)
+    }
   }
 }
 module.exports = Instructor
